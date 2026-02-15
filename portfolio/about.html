@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chinmaya | About</title>
+    <style>
+        html,
+        body {
+            background: #000;
+            color: #fff;
+            margin: 0;
+        }
+
+        body {
+            opacity: 0;
+            transition: opacity 0.1s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body data-barba="wrapper">
+
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-text">
+            <span>c</span><span>h</span><span>i</span><span>n</span><span>m</span><span>a</span><span>y</span><span>a</span><span>.</span>
+        </div>
+    </div>
+
+    <div class="noise-overlay"></div>
+
+    <nav class="nav">
+        <div class="nav-left">
+            <a href="/" class="brand">chinmaya.</a>
+            <span class="current-time"></span>
+        </div>
+        <button class="menu-toggle" aria-label="Toggle Menu">
+            <div class="hamburger-box">
+                <span class="line line-1"></span>
+                <span class="line line-2"></span>
+                <span class="line line-3"></span>
+            </div>
+        </button>
+    </nav>
+
+    <div class="menu-overlay">
+        <div class="menu-links">
+            <a href="/projects.html" class="menu-item"><span class="menu-num">01</span> Projects</a>
+            <a href="/playground.html" class="menu-item"><span class="menu-num">02</span> Playground</a>
+            <a href="/about.html" class="menu-item"><span class="menu-num">03</span> About</a>
+            <a href="/contact.html" class="menu-item"><span class="menu-num">04</span> Contact</a>
+            <a href="/cv.pdf" class="menu-item"><span class="menu-num">05</span> CV</a>
+        </div>
+        <div class="menu-info">
+            <h3>Connect</h3>
+            <a href="https://www.linkedin.com/in/chinmayaranjanswain" target="_blank">LinkedIn</a>
+            <a href="https://github.com/chinmayaranjanswain" target="_blank">GitHub</a>
+            <a href="https://www.instagram.com/chinmaya_353" target="_blank">Instagram</a>
+            <div class="menu-email">
+                <h3>Say Hello</h3>
+                <p>chinmayaranjanswain353@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    <main data-barba="container" data-barba-namespace="about">
+
+        <section class="page-hero">
+            <div class="page-hero-content">
+                <div class="reveal-text">
+                    <h1>ABOUT</h1>
+                </div>
+                <div class="reveal-text">
+                    <h1>ME.</h1>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-content">
+
+            <div class="about-intro">
+                <div class="about-col">
+                    <span class="section-label">01 / WHO I AM</span>
+                    <p>
+                        I'm Chinmaya Swain — a system architect, developer, and creative technologist from Cuttack,
+                        India.
+                        I build things at the intersection of design and engineering, where beautiful interfaces meet
+                        robust backend systems.
+                    </p>
+                </div>
+                <div class="about-col">
+                    <span class="section-label">02 / WHAT I DO</span>
+                    <p>
+                        Full-stack development with MERN, Python automation, computer vision with OpenCV,
+                        and creative coding with Three.js. I believe in systems that are both powerful and elegant.
+                    </p>
+                </div>
+            </div>
+
+            <div class="about-skills">
+                <span class="section-label">03 / TECH STACK</span>
+                <div class="skills-grid">
+                    <div class="skill-item">JavaScript</div>
+                    <div class="skill-item">React</div>
+                    <div class="skill-item">Node.js</div>
+                    <div class="skill-item">Python</div>
+                    <div class="skill-item">MongoDB</div>
+                    <div class="skill-item">Three.js</div>
+                    <div class="skill-item">OpenCV</div>
+                    <div class="skill-item">Java</div>
+                    <div class="skill-item">Express</div>
+                    <div class="skill-item">GSAP</div>
+                    <div class="skill-item">Git</div>
+                    <div class="skill-item">Figma</div>
+                </div>
+            </div>
+
+        </section>
+
+        <nav class="bottom-nav">
+            <div class="nav-group">
+                <a href="/projects.html" class="nav-link"><span class="nav-num">01</span> Projects</a>
+                <a href="/playground.html" class="nav-link"><span class="nav-num">02</span> Playground</a>
+            </div>
+            <div class="nav-group">
+                <a href="/" class="nav-link"><span class="nav-num">00</span> Home</a>
+                <a href="/contact.html" class="nav-link"><span class="nav-num">04</span> Contact</a>
+            </div>
+        </nav>
+
+    </main>
+
+    <canvas id="webgl-canvas"></canvas>
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

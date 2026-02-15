@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chinmaya | Portfolio</title>
+  <style>
+    html,
+    body {
+      background: #000;
+      color: #fff;
+      margin: 0;
+    }
+
+    body {
+      opacity: 0;
+      transition: opacity 0.1s ease;
+    }
+
+    body.loaded {
+      opacity: 1;
+    }
+
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body data-barba="wrapper">
+
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader-text">
+      <span>c</span><span>h</span><span>i</span><span>n</span><span>m</span><span>a</span><span>y</span><span>a</span><span>.</span>
+    </div>
+  </div>
+
+  <div class="noise-overlay"></div>
+
+  <nav class="nav">
+    <div class="nav-left">
+      <a href="/" class="brand">chinmaya.</a>
+      <span class="current-time">2/14/26, 1:50 PM</span>
+    </div>
+
+    <button class="menu-toggle" aria-label="Toggle Menu">
+      <div class="hamburger-box">
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+        <span class="line line-3"></span>
+      </div>
+    </button>
+  </nav>
+
+  <div class="menu-overlay">
+    <div class="menu-links">
+      <a href="/projects.html" class="menu-item">
+        <span class="menu-num">01</span> Projects
+      </a>
+      <a href="/playground.html" class="menu-item">
+        <span class="menu-num">02</span> Playground
+      </a>
+      <a href="/about.html" class="menu-item">
+        <span class="menu-num">03</span> About
+      </a>
+      <a href="/contact.html" class="menu-item">
+        <span class="menu-num">04</span> Contact
+      </a>
+      <a href="/cv.pdf" class="menu-item">
+        <span class="menu-num">05</span> CV
+      </a>
+    </div>
+
+    <div class="menu-info">
+      <h3>Connect</h3>
+      <a href="https://www.linkedin.com/in/chinmayaranjanswain" target="_blank">LinkedIn</a>
+      <a href="https://github.com/chinmayaranjanswain" target="_blank">GitHub</a>
+      <a href="https://www.instagram.com/chinmaya_353" target="_blank">Instagram</a>
+
+      <div class="menu-email">
+        <h3>Say Hello</h3>
+        <p>chinmayaranjanswain353@gmail.com</p>
+      </div>
+    </div>
+  </div>
+
+  <main data-barba="container" data-barba-namespace="home">
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="reveal-text">
+          <h1>CHINMAYA</h1>
+        </div>
+        <div class="reveal-text">
+          <h1>SWAIN.</h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDEO SHOWREEL -->
+    <section class="showreel-section">
+      <div class="showreel-text">
+        <span class="section-label">SHOWREEL / 2026</span>
+        <h2>Building systems<br>that feel alive.</h2>
+        <p>Full-stack developer & creative technologist crafting digital experiences at the intersection of design and
+          engineering.</p>
+      </div>
+      <div class="showreel-video">
+        <div class="video-wrapper">
+          <video autoplay muted loop playsinline>
+            <source src="" type="video/mp4">
+          </video>
+          <div class="video-placeholder">
+            <video autoplay muted src="portfolio\assets\videos\match-cut.mp4"></video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GITHUB CONTRIBUTIONS -->
+    <section class="github-section">
+      <div class="github-header">
+        <span class="section-label">OPEN SOURCE</span>
+        <h2>Contributions</h2>
+      </div>
+
+      <div class="github-profile-card">
+        <img src="https://avatars.githubusercontent.com/u/187296043?v=4" alt="Chinmaya" class="gh-avatar" />
+        <div class="gh-profile-info">
+          <h3>Chinmaya Ranjan Swain</h3>
+          <a href="https://github.com/chinmayaranjanswain" target="_blank"
+            class="github-username">@chinmayaranjanswain</a>
+          <p class="gh-location">📍 Cuttack, Odisha</p>
+        </div>
+      </div>
+
+      <div class="contribution-board" id="contribution-board">
+        <!-- Filled by JS via GitHub Events API -->
+      </div>
+
+      <div class="github-stats" id="github-stats">
+        <!-- Filled by JS via GitHub API -->
+        <div class="stat">
+          <span class="stat-num" id="stat-repos">11</span>
+          <span class="stat-label">Repositories</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="stat-followers">1</span>
+          <span class="stat-label">Followers</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="stat-following">4</span>
+          <span class="stat-label">Following</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECENT PROJECTS (fetched live from GitHub) -->
+    <section class="recent-projects-section">
+      <div class="recent-header">
+        <span class="section-label">CURRENTLY BUILDING</span>
+        <h2>Recent Work</h2>
+      </div>
+
+      <div class="recent-projects-grid" id="recent-projects-grid">
+        <!-- Filled by JS via GitHub Repos API -->
+      </div>
+
+      <a href="https://github.com/chinmayaranjanswain?tab=repositories" target="_blank" class="view-all-link">View All
+        on GitHub →</a>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery-section">
+      <div class="gallery-header">
+        <span class="section-label">MOMENTS</span>
+        <h2>Gallery</h2>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" data-color="#6366f1">
+          <div class="gallery-img" style="background-color: transparent;"> <img
+              src="portfolio\assets\photos\replace the music pic.webp" alt=""></div>
+          <span class="gallery-caption">Code & Coffee</span>
+        </div>
+        <div class="gallery-item" data-color="#ec4899">
+          <div class="gallery-img" style="background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
+          <span class="gallery-caption">Late Night Builds</span>
+        </div>
+        <div class="gallery-item" data-color="#14b8a6">
+          <div class="gallery-img" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+          <span class="gallery-caption">Hackathon Vibes</span>
+        </div>
+        <div class="gallery-item" data-color="#f59e0b">
+          <div class="gallery-img" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
+          <span class="gallery-caption">Design Process</span>
+        </div>
+        <div class="gallery-item" data-color="#8b5cf6">
+          <div class="gallery-img" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);"></div>
+          <span class="gallery-caption">Team Work</span>
+        </div>
+        <div class="gallery-item" data-color="#10b981">
+          <div class="gallery-img" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
+          <span class="gallery-caption">Open Source</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-top">
+        <div class="footer-cta">
+          <h2>Let's work<br>together.</h2>
+          <a href="/contact.html" class="footer-cta-btn">Get in Touch →</a>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Navigation</h4>
+            <a href="/">Home</a>
+            <a href="/projects.html">Projects</a>
+            <a href="/playground.html">Playground</a>
+            <a href="/about.html">About</a>
+          </div>
+          <div class="footer-col">
+            <h4>Socials</h4>
+            <a href="https://github.com/chinmayaranjanswain" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/chinmayaranjanswain" target="_blank">LinkedIn</a>
+            <a href="https://www.instagram.com/chinmaya_353" target="_blank">Instagram</a>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:chinmayaranjanswain353@gmail.com">chinmayaranjanswain353@gmail.com</a>
+            <p>Cuttack, India</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Chinmaya Swain. All rights reserved.</span>
+        <span class="footer-time current-time"></span>
+      </div>
+    </footer>
+
+    <nav class="bottom-nav">
+      <div class="nav-group">
+        <a href="/projects.html" class="nav-link">
+          <span class="nav-num">01</span> Projects
+        </a>
+        <a href="/playground.html" class="nav-link">
+          <span class="nav-num">02</span> Playground
+        </a>
+      </div>
+      <div class="nav-group">
+        <a href="/about.html" class="nav-link">
+          <span class="nav-num">03</span> About
+        </a>
+        <a href="/contact.html" class="nav-link">
+          <span class="nav-num">04</span> Contact
+        </a>
+      </div>
+    </nav>
+
+  </main>
+
+  <canvas id="webgl-canvas"></canvas>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

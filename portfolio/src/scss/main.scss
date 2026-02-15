@@ -1,0 +1,1649 @@
+// Reset margins
+@use 'typography' as *;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   PAGE LOADER
+   ========================================= */
+.page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
+}
+
+.loader-text {
+    font-family: 'valofont', sans-serif;
+    font-size: 4rem;
+    color: #fff;
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+
+    span {
+        display: inline-block;
+        will-change: transform;
+    }
+}
+
+body {
+    background-color: #0a0a0a; // Deep dark grey
+    color: #e0e0e0; // Off-white text
+    font-family: 'valofont', Arial, sans-serif;
+    overflow-x: hidden; // Prevent horizontal scroll
+}
+
+
+#webgl-canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0; // Behind the main content
+    pointer-events: none;
+
+    // Creates a "soft glow" around the white lines
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+    color: b;
+}
+
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none; // Click through it
+    mix-blend-mode: difference; // Inverts colors behind it
+    z-index: 9999;
+    transform: translate(-50%, -50%); // Center on mouse
+}
+
+// Hide default cursor
+body {
+    cursor: none;
+}
+
+// 1. HEADER (Parent Container) - The Root Cause
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    // CRITICAL: This must be higher than .menu-overlay (which is 90)
+    // If this was 10 or auto, the overlay would cover your button.
+    z-index: 300;
+
+    mix-blend-mode: difference;
+    color: #fff;
+    pointer-events: none; // Let clicks pass through the empty parts of nav
+}
+
+// Enable clicks on the children of nav (Brand & Button)
+.nav-left,
+.menu-toggle {
+    pointer-events: auto;
+}
+
+// 2. HAMBURGER BUTTON
+.menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    position: relative;
+    z-index: 301; // Just to be safe
+}
+
+// 3. LINES (Color Enforcement)
+.line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    // CRITICAL: Force white color so it doesn't blend into the black overlay
+    background-color: #ffffff !important;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+// 4. THE CROSS ANIMATION (Refined)
+.menu-toggle.is-active {
+    .line-1 {
+        transform: translateY(11px) rotate(45deg);
+    }
+
+    .line-2 {
+        opacity: 0;
+    }
+
+    .line-3 {
+        transform: translateY(-11px) rotate(-45deg);
+    }
+}
+
+// The Overlay Container
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0a0a0a; // Match your dark theme
+    z-index: 90; // Below the "MENU" button (z-index 100) so you can still hover it
+    display: flex;
+    padding: 8rem 10vw; // Space from top/sides
+    justify-content: space-between;
+
+    // Default State: Hidden (Pushed up)
+    transform: translateY(-100%);
+    will-change: transform; // Performance optimization
+    padding-top: 100px; // Push content down so it doesn't hit the "CLOSE" button
+
+}
+
+
+
+// 2. The Box holding the lines
+.hamburger-box {
+    width: 30px; // Width of the icon
+    height: 24px; // Height of the icon area
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+// 3. The Lines (White Bars)
+.line {
+    display: block;
+    width: 100%;
+    height: 2px; // Thickness of the lines
+    background-color: #fff;
+    transition: transform 0.3s ease, opacity 0.3s ease; // Smooth animation
+    transform-origin: center; // Rotate from the center
+}
+
+// 4. THE "X" TRANSFORMATION (When class 'is-active' is added)
+.menu-toggle.is-active {
+
+    // Top line rotates 45 degrees and moves down
+    .line-1 {
+        transform: translateY(11px) rotate(45deg);
+    }
+
+    // Middle line fades out
+    .line-2 {
+        opacity: 0;
+    }
+
+    // Bottom line rotates -45 degrees and moves up
+    .line-3 {
+        transform: translateY(-11px) rotate(-45deg);
+    }
+}
+
+// Left Column: The Big Links
+.menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.menu-item {
+    font-family: $font-stack; // Your big font
+    font-size: 6vw; // Massive text
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    line-height: 0.9;
+    transition: color 0.3s ease;
+    opacity: 0; // Hidden for animation
+    transform: translateY(20px); // Start slightly lower
+
+    &:hover {
+        color: #888; // Dim on hover (or pick an accent color)
+        font-style: italic; // Optional stylistic choice
+    }
+}
+
+.menu-num {
+    font-size: 1.5rem;
+    font-family: 'Courier New', monospace;
+    margin-right: 2rem;
+    vertical-align: middle;
+    color: #555;
+}
+
+// Right Column: Socials
+.menu-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    padding-top: 2rem;
+    opacity: 0; // Hidden for animation
+
+    h3 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: #555;
+        margin-bottom: 0.5rem;
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+}
+
+.menu-email {
+    margin-top: 4rem;
+}
+
+
+// Main Layout
+.hero-section {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; // Pushes Header up, Footer down
+    padding: 10rem 4rem 4rem 4rem; // Top Right Bottom Left
+    position: relative;
+    z-index: 2; // Above the canvas
+}
+
+// The Big Text
+.hero-content h1 {
+    font-size: 10vw; // Massive
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    margin-top: 2vw;
+    font-weight: 400;
+    mix-blend-mode: difference; // Inverts colors behind it
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.15), 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+// The Bottom Navigation Container
+.bottom-nav {
+    position: fixed; // Always visible at the bottom
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 4rem; // Match the top padding
+    display: flex;
+    justify-content: space-between; // Split Left and Right groups
+    align-items: flex-end;
+    z-index: 100;
+    mix-blend-mode: difference; // Cool effect: inverts colors over images
+}
+
+.nav-group {
+    display: flex;
+    gap: 3rem; // Space between links
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Helvetica Neue', sans-serif; // Clean font
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    transition: opacity 0.3s ease;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.5);
+
+    // Dim them slightly by default
+    opacity: 0.7;
+
+    &:hover {
+        opacity: 1; // Brighten on hover
+    }
+
+    // The "Underline" animation
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0%;
+        height: 1px;
+        background-color: #fff;
+        transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+        width: 100%;
+    }
+}
+
+// The little numbers (01, 02...)
+.nav-num {
+    font-size: 0.7rem;
+    margin-right: 5px;
+    opacity: 0.5;
+    font-family: 'Courier New', monospace; // Tech feel
+    vertical-align: top; // Aligns slightly higher
+}
+
+// Mobile Responsiveness
+@media (max-width: 768px) {
+    .bottom-nav {
+        padding: 1.5rem;
+        flex-direction: column; // Stack them vertically
+        gap: 1rem;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.8); // Add background so it's readable
+        backdrop-filter: blur(5px);
+    }
+
+    .nav-group {
+        gap: 2rem;
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+// The Header Details (z-index handled by the main .nav block above with z-index: 300)
+
+.nav-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.brand {
+    font-size: 2rem;
+    text-decoration: none;
+    color: currentColor;
+    font-weight: bold;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+.current-time {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    font-family: 'Courier New', monospace; // Tech feel
+}
+
+// The Bottom Footer
+.hero-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 1rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.2); // Subtle line
+    padding-top: 2rem;
+}
+
+.read-more {
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+// Mobile Adjustments
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 6rem 2rem 2rem 2rem;
+    }
+
+    .hero-content h1 {
+        font-size: 14vw;
+    }
+
+    .hero-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+
+// Layout Reset
+.projects-container {
+    padding: 10vw 5vw; // Huge padding
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.project-header {
+    margin-bottom: 10vh;
+}
+
+// The Grid
+.project-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.2); // Subtle separator
+    padding: 4rem 0;
+    display: grid;
+    grid-template-columns: 1fr 3fr; // Sidebar takes 1 part, content takes 3
+    align-items: start;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05); // Subtle highlight
+    }
+}
+
+// Mobile Responsiveness (The "Bug Hunt" prevention for Day 7)
+@media (max-width: 768px) {
+    .project-item {
+        grid-template-columns: 1fr; // Stack vertically on phone
+        gap: 1rem;
+    }
+
+    h1 {
+        font-size: 18vw; // Even bigger on mobile
+    }
+}
+
+// The "Mask" for the text reveal
+.reveal-text {
+    overflow: hidden; // Hides the text when it's pushed down
+    display: block; // Ensures it takes up space
+    line-height: 1; // Tightens the mask
+}
+
+// The actual text element inside needs to be display: block
+.reveal-text span,
+.reveal-text h1 {
+    display: block;
+    transform: translateY(100%); // Start pushed down (hidden)
+}
+
+/* =========================================
+   PAGE HERO (Shared across inner pages)
+   ========================================= */
+.page-hero {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 4rem 4rem 4rem;
+}
+
+.page-hero-content h1 {
+    font-size: 10vw;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+    mix-blend-mode: difference;
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.15), 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.page-subtitle {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1.1rem;
+    opacity: 0.5;
+    margin-top: 2rem;
+    padding: 0 4rem;
+    letter-spacing: 0.03em;
+}
+
+/* =========================================
+   SECTION LABEL (Reusable)
+   ========================================= */
+.section-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #555;
+    font-family: 'Courier New', monospace;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+/* =========================================
+   ABOUT PAGE
+   ========================================= */
+.about-content {
+    padding: 8rem 4rem;
+}
+
+.about-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 4rem;
+    margin-bottom: 8rem;
+}
+
+.about-col p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    opacity: 0.8;
+}
+
+.about-skills {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 4rem;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+}
+
+.skill-item {
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+        background-color: #fff;
+        color: #0a0a0a;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-intro {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .page-hero {
+        padding: 0 2rem 2rem 2rem;
+    }
+
+    .page-hero-content h1 {
+        font-size: 14vw;
+    }
+
+    .about-content,
+    .contact-content,
+    .playground-container {
+        padding: 4rem 2rem;
+    }
+}
+
+/* =========================================
+   CONTACT PAGE
+   ========================================= */
+.contact-content {
+    padding: 8rem 4rem;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 4rem;
+}
+
+.contact-link-big {
+    font-family: $font-stack;
+    font-size: 3vw;
+    color: #fff;
+    text-decoration: none;
+    line-height: 1.2;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+        opacity: 0.6;
+    }
+}
+
+.contact-socials {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.social-link {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1.2rem;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    opacity: 0.8;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.contact-detail {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    opacity: 0.7;
+}
+
+.contact-cta {
+    margin-top: 8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 4rem;
+
+    p {
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 1.5rem;
+        opacity: 0.6;
+        max-width: 600px;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .contact-link-big {
+        font-size: 8vw;
+    }
+}
+
+/* =========================================
+   PLAYGROUND PAGE
+   ========================================= */
+.playground-container {
+    padding: 4rem 4rem 8rem 4rem;
+}
+
+.playground-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+}
+
+.lab-item {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3rem;
+    transition: background-color 0.4s ease;
+    position: relative;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    h3 {
+        font-family: $font-stack;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+    }
+
+    p {
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        opacity: 0.6;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.lab-num {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.lab-tag {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.3rem 0.8rem;
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .playground-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   PAGE TRANSITION OVERLAY
+   ========================================= */
+.page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    z-index: 9999;
+    transform: translateY(100%);
+    will-change: transform;
+}
+
+/* =========================================
+   PROJECT PAGE (Enhanced existing)
+   ========================================= */
+.meta {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #555;
+}
+
+.project-item-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.project-item {
+    position: relative;
+}
+
+.project-arrow {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%) translateX(-10px);
+    font-size: 2rem;
+    opacity: 0;
+    transition: all 0.4s ease;
+    color: rgba(56, 249, 215, 0.8);
+}
+
+.project-item-link:hover .project-arrow {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+.project-item-link:hover .project-item {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.project-info h2 {
+    font-family: $font-stack;
+    font-size: 3vw;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.project-info p {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.6;
+    max-width: 500px;
+}
+
+/* =========================================
+   PROJECT DETAIL PAGE
+   ========================================= */
+
+.pd-back {
+    padding: 8rem 4rem 0;
+}
+
+.pd-back-link {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: rgba(56, 249, 215, 0.7);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: rgba(56, 249, 215, 1);
+    }
+}
+
+.pd-hero {
+    padding: 3rem 4rem 2rem;
+}
+
+.pd-hero-meta {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    .section-label {
+        font-family: 'Courier New', monospace;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: rgba(56, 249, 215, 0.8);
+    }
+}
+
+.pd-date {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    color: #555;
+}
+
+.pd-hero h1 {
+    font-family: $font-stack;
+    font-size: clamp(2rem, 5vw, 5rem);
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+
+.pd-content {
+    padding: 0 4rem 4rem;
+}
+
+.pd-video-area {
+    margin-bottom: 4rem;
+}
+
+.pd-video-area .video-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pd-video-area .video-placeholder {
+    aspect-ratio: 16/9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: #444;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.video-placeholder video {
+    z-index: 99;
+    height: fit-content;
+
+}
+
+.pd-video-area {
+    font-size: 3rem;
+    color: rgba(56, 249, 215, 0.4);
+}
+
+.pd-info-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.pd-description {
+    h3 {
+        font-family: $font-stack;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        letter-spacing: 0.05em;
+    }
+
+    p {
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #aaa;
+    }
+}
+
+.pd-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.pd-meta-block {
+    h4 {
+        font-family: 'Courier New', monospace;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #555;
+        margin-bottom: 0.8rem;
+    }
+}
+
+.pd-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.pd-tag {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid rgba(56, 249, 215, 0.3);
+    border-radius: 20px;
+    color: rgba(56, 249, 215, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pd-stats {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.pd-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.pd-stat-num {
+    font-family: $font-stack;
+    font-size: 1.5rem;
+}
+
+.pd-stat-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #555;
+}
+
+.pd-link-btn {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+        background: rgba(56, 249, 215, 0.1);
+        border-color: rgba(56, 249, 215, 0.5);
+        color: rgba(56, 249, 215, 1);
+    }
+
+    &--live {
+        background: rgba(56, 249, 215, 0.08);
+        border-color: rgba(56, 249, 215, 0.3);
+    }
+}
+
+.pd-readme {
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+
+    h3 {
+        font-family: 'Courier New', monospace;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #555;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.pd-readme-content {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #999;
+
+    h2,
+    h3,
+    h4 {
+        font-family: $font-stack;
+        color: #eee;
+        margin: 1.5rem 0 0.8rem;
+        text-transform: uppercase;
+    }
+
+    code {
+        font-family: 'Courier New', monospace;
+        background: rgba(56, 249, 215, 0.08);
+        padding: 0.1em 0.4em;
+        border-radius: 4px;
+        font-size: 0.85em;
+        color: rgba(56, 249, 215, 0.9);
+    }
+
+    strong {
+        color: #ccc;
+    }
+}
+
+/* Detail page responsive */
+@media (max-width: 768px) {
+    .pd-back {
+        padding: 7rem 1.5rem 0;
+    }
+
+    .pd-hero {
+        padding: 2rem 1.5rem 1rem;
+    }
+
+    .pd-content {
+        padding: 0 1.5rem 2rem;
+    }
+
+    .pd-info-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .pd-readme {
+        padding: 1.5rem;
+    }
+}
+
+/* =========================================
+   SHOWREEL SECTION
+   ========================================= */
+.showreel-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    padding: 8rem 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.showreel-text {
+    h2 {
+        font-family: $font-stack;
+        font-size: 4vw;
+        line-height: 1.1;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+    }
+
+    p {
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        opacity: 0.6;
+        max-width: 400px;
+    }
+}
+
+.showreel-video {
+    position: relative;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: linear-gradient(135deg, #111 0%, #1a1a2e 100%);
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.4s ease;
+
+    &:hover {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+}
+
+.play-icon {
+    font-size: 2.5rem;
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .showreel-section {
+        grid-template-columns: 1fr;
+        padding: 4rem 2rem;
+    }
+
+    .showreel-text h2 {
+        font-size: 8vw;
+    }
+}
+
+/* =========================================
+   GITHUB CONTRIBUTION BOARD
+   ========================================= */
+.github-section {
+    padding: 8rem 4rem;
+    position: relative;
+    z-index: 2;
+}
+
+.github-header {
+    margin-bottom: 3rem;
+
+    h2 {
+        font-family: $font-stack;
+        font-size: 4vw;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.github-username {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: rgba(56, 249, 215, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: rgba(56, 249, 215, 1);
+    }
+}
+
+.github-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.gh-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid rgba(56, 249, 215, 0.4);
+    object-fit: cover;
+}
+
+.gh-profile-info {
+    h3 {
+        font-family: $font-stack;
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+    }
+
+    .gh-location {
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 0.85rem;
+        color: #555;
+        margin-top: 0.3rem;
+    }
+}
+
+.contribution-board {
+    display: grid;
+    grid-template-columns: repeat(52, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 3rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+}
+
+.contrib-cell {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 2px;
+    min-width: 10px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+
+    &:hover {
+        transform: scale(1.8);
+        z-index: 5;
+    }
+}
+
+.contrib-0 {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.contrib-1 {
+    background-color: rgba(56, 249, 215, 0.2);
+}
+
+.contrib-2 {
+    background-color: rgba(56, 249, 215, 0.4);
+}
+
+.contrib-3 {
+    background-color: rgba(56, 249, 215, 0.65);
+}
+
+.contrib-4 {
+    background-color: rgba(56, 249, 215, 0.9);
+}
+
+.github-stats {
+    display: flex;
+    gap: 4rem;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.stat-num {
+    font-family: $font-stack;
+    font-size: 2.5rem;
+}
+
+.stat-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .github-section {
+        padding: 4rem 2rem;
+    }
+
+    .github-header h2 {
+        font-size: 8vw;
+    }
+
+    .contribution-board {
+        gap: 2px;
+    }
+
+    .github-stats {
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+}
+
+/* =========================================
+   RECENT PROJECTS SECTION
+   ========================================= */
+.recent-projects-section {
+    padding: 8rem 4rem;
+    position: relative;
+    z-index: 2;
+}
+
+.recent-header {
+    margin-bottom: 4rem;
+
+    h2 {
+        font-family: $font-stack;
+        font-size: 4vw;
+        text-transform: uppercase;
+    }
+}
+
+.recent-projects-grid {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.recent-project {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    color: #fff;
+    transition: padding-left 0.4s ease, background-color 0.3s ease;
+
+    &:hover {
+        padding-left: 2rem;
+        background-color: rgba(255, 255, 255, 0.03);
+
+        .rp-arrow {
+            transform: translateX(10px);
+            opacity: 1;
+        }
+    }
+}
+
+.rp-num {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #555;
+    min-width: 30px;
+}
+
+.rp-info {
+    flex: 1;
+
+    h3 {
+        font-family: $font-stack;
+        font-size: 2rem;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+    }
+
+    p {
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 0.9rem;
+        opacity: 0.5;
+    }
+}
+
+.rp-arrow {
+    font-size: 1.5rem;
+    opacity: 0.3;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.view-all-link {
+    display: inline-block;
+    margin-top: 3rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1rem;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .recent-projects-section {
+        padding: 4rem 2rem;
+    }
+
+    .recent-header h2 {
+        font-size: 8vw;
+    }
+
+    .rp-info h3 {
+        font-size: 1.3rem;
+    }
+}
+
+/* =========================================
+   GALLERY SECTION
+   ========================================= */
+.gallery-section {
+    padding: 8rem 4rem;
+    position: relative;
+    z-index: 2;
+}
+
+.gallery-header {
+    margin-bottom: 4rem;
+
+    h2 {
+        font-family: $font-stack;
+        font-size: 4vw;
+        text-transform: uppercase;
+    }
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:hover {
+        .gallery-img {
+            transform: scale(1.08);
+            border-radius: 20px;
+        }
+
+        .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+.gallery-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.gallery-caption {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 0.9rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 768px) {
+    .gallery-section {
+        padding: 4rem 2rem;
+    }
+
+    .gallery-header h2 {
+        font-size: 8vw;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+.site-footer {
+    padding: 8rem 4rem 2rem;
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 6rem;
+}
+
+.footer-cta {
+    h2 {
+        font-family: $font-stack;
+        font-size: 5vw;
+        text-transform: uppercase;
+        line-height: 1.1;
+        margin-bottom: 2rem;
+    }
+}
+
+.footer-cta-btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border: 1px solid #fff;
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+        background-color: #fff;
+        color: #0a0a0a;
+    }
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    h4 {
+        font-family: 'Courier New', monospace;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #555;
+        margin-bottom: 0.5rem;
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 0.95rem;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    p {
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 0.95rem;
+        opacity: 0.5;
+    }
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    color: #555;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 4rem 2rem 2rem;
+    }
+
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .footer-cta h2 {
+        font-size: 10vw;
+    }
+
+    .footer-links {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}

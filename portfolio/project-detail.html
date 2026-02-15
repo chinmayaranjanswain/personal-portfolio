@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chinmaya | Project</title>
+    <style>
+        html,
+        body {
+            background: #000;
+            color: #fff;
+            margin: 0;
+        }
+
+        body {
+            opacity: 0;
+            transition: opacity 0.1s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body data-barba="wrapper">
+
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-text">
+            <span>c</span><span>h</span><span>i</span><span>n</span><span>m</span><span>a</span><span>y</span><span>a</span><span>.</span>
+        </div>
+    </div>
+
+    <div class="noise-overlay"></div>
+
+    <nav class="nav">
+        <div class="nav-left">
+            <a href="/" class="brand">chinmaya.</a>
+            <span class="current-time"></span>
+        </div>
+        <button class="menu-toggle" aria-label="Toggle Menu">
+            <div class="hamburger-box">
+                <span class="line line-1"></span>
+                <span class="line line-2"></span>
+                <span class="line line-3"></span>
+            </div>
+        </button>
+    </nav>
+
+    <div class="menu-overlay">
+        <div class="menu-links">
+            <a href="/projects.html" class="menu-item"><span class="menu-num">01</span> Projects</a>
+            <a href="/playground.html" class="menu-item"><span class="menu-num">02</span> Playground</a>
+            <a href="/about.html" class="menu-item"><span class="menu-num">03</span> About</a>
+            <a href="/contact.html" class="menu-item"><span class="menu-num">04</span> Contact</a>
+            <a href="/cv.pdf" class="menu-item"><span class="menu-num">05</span> CV</a>
+        </div>
+        <div class="menu-info">
+            <h3>Connect</h3>
+            <a href="https://www.linkedin.com/in/chinmayaranjanswain" target="_blank">LinkedIn</a>
+            <a href="https://github.com/chinmayaranjanswain" target="_blank">GitHub</a>
+            <a href="https://www.instagram.com/chinmaya_353" target="_blank">Instagram</a>
+            <div class="menu-email">
+                <h3>Say Hello</h3>
+                <p>chinmayaranjanswain353@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+    <main data-barba="container" data-barba-namespace="project-detail">
+
+        <!-- Back link -->
+        <div class="pd-back">
+            <a href="/projects.html" class="pd-back-link">← Back to Projects</a>
+        </div>
+
+        <!-- Project Detail Content (populated by JS) -->
+        <section class="pd-hero" id="pd-hero">
+            <div class="pd-hero-meta">
+                <span class="section-label" id="pd-language">LOADING...</span>
+                <span class="pd-date" id="pd-date"></span>
+            </div>
+            <h1 id="pd-title">Loading Project...</h1>
+        </section>
+
+        <section class="pd-content">
+            <!-- Video / Showcase -->
+            <div class="pd-video-area" id="pd-video-area">
+                <div class="video-wrapper">
+                    <div class="video-placeholder">
+                        <span class="play-icon">▶</span>
+                        <span>PROJECT DEMO</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Grid -->
+            <div class="pd-info-grid">
+                <div class="pd-description">
+                    <h3>About This Project</h3>
+                    <p id="pd-description">Loading description...</p>
+                </div>
+
+                <div class="pd-sidebar">
+                    <div class="pd-meta-block">
+                        <h4>Tech Stack</h4>
+                        <div class="pd-tags" id="pd-tags">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+
+                    <div class="pd-meta-block">
+                        <h4>Stats</h4>
+                        <div class="pd-stats">
+                            <div class="pd-stat">
+                                <span class="pd-stat-num" id="pd-stars">0</span>
+                                <span class="pd-stat-label">Stars</span>
+                            </div>
+                            <div class="pd-stat">
+                                <span class="pd-stat-num" id="pd-forks">0</span>
+                                <span class="pd-stat-label">Forks</span>
+                            </div>
+                            <div class="pd-stat">
+                                <span class="pd-stat-num" id="pd-size">0</span>
+                                <span class="pd-stat-label">KB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pd-meta-block">
+                        <h4>Links</h4>
+                        <a href="#" id="pd-github-link" target="_blank" class="pd-link-btn">
+                            View on GitHub →
+                        </a>
+                        <a href="#" id="pd-live-link" target="_blank" class="pd-link-btn pd-link-btn--live"
+                            style="display:none;">
+                            Live Demo →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- README Section -->
+            <div class="pd-readme" id="pd-readme">
+                <h3>README</h3>
+                <div class="pd-readme-content" id="pd-readme-content">
+                    <p>Loading README...</p>
+                </div>
+            </div>
+        </section>
+
+        <nav class="bottom-nav">
+            <div class="nav-group">
+                <a href="/" class="nav-link"><span class="nav-num">00</span> Home</a>
+                <a href="/projects.html" class="nav-link"><span class="nav-num">01</span> Projects</a>
+            </div>
+            <div class="nav-group">
+                <a href="/about.html" class="nav-link"><span class="nav-num">03</span> About</a>
+                <a href="/contact.html" class="nav-link"><span class="nav-num">04</span> Contact</a>
+            </div>
+        </nav>
+
+    </main>
+
+    <canvas id="webgl-canvas"></canvas>
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+/* =========================================
+   1. REGISTER CUSTOM FONTS
+   ========================================= */
+
+// FIX 1: Path should be '/fonts/...' (Forward slashes, no project folder name)
+// FIX 2: Format for .otf is 'opentype'
+@font-face {
+    font-family: 'valofont';
+    src: url('/fonts/Valorax-lg25V.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Neu';
+    src: url('/fonts/3856NeueMachina.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'juana';
+    src: url('/fonts/Fontspring-DEMO-juana-extralightit_toKzXEsfr.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'circuit';
+    src: url('/fonts/CircuitForemRegular-zr2n1.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* =========================================
+   2. DEFINE VARIABLES
+   ========================================= */
+
+// FIX 3: Added 'valofont' to the front of the stack
+$font-stack: 'valofont', 'Neu', 'Helvetica Neue', sans-serif;
+$secondary-font: 'juana', serif;
+
+/* =========================================
+   3. APPLY TO MOVING TEXT
+   ========================================= */
+
+// Applying globally to H1
+h1 {
+    font-family: $font-stack;
+}
+
+// SPECIFIC FIX: Targeting the moving text specifically to be safe
+.hero-content h1 {
+    font-family: 'valofont', sans-serif;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.reveal-text h1 {
+
+    font-family: 'circuit', sans-serif;
+    text-transform: uppercase;
+    font-weight: normal;
+
+    /* Custom fonts often look bad with bold applied automatically */
+    /* Optional: 'Valorax' usually looks best uppercase */
+}

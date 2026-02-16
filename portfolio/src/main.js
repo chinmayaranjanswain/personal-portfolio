@@ -215,9 +215,10 @@ function initHeroAnimation() {
     '.about-content, .contact-content, .projects-container, .playground-container'
   );
   if (contentSections.length > 0) {
-    gsap.from(contentSections, {
-      y: 40,
-      opacity: 0,
+    // Animate to visible state (initial hidden state is set via CSS below)
+    gsap.to(contentSections, {
+      y: 0,
+      opacity: 1,
       duration: 1,
       ease: "power3.out",
       delay: 0.8
@@ -241,6 +242,14 @@ async function initProjectDetail() {
   const heroEl = document.getElementById('pd-hero');
   if (!heroEl) return; // Not on this page
 
+  // Map GitHub repo names → local video files
+  const VIDEO_MAP = {
+    'BOPIS---Buy-Online-Pick-Up-In-Store': '/assets/videos/BOPIS project.mp4',
+    'Delay-Reverb-Time-Calculator': '/assets/videos/reverb calculater.mp4',
+    'my-healer-': '/assets/videos/my healer.mp4',
+    'chinmaya-watch-shop-e-commers': '/assets/videos/e-com watch shop.mp4',
+  };
+
   const params = new URLSearchParams(window.location.search);
   const repoName = params.get('repo');
   if (!repoName) {
@@ -251,6 +260,19 @@ async function initProjectDetail() {
   // Set page title
   const readableName = repoName.replace(/-/g, ' ');
   document.title = `Chinmaya | ${readableName}`;
+
+  // Inject video if available
+  const videoSrc = VIDEO_MAP[repoName] || VIDEO_MAP[repoName.toLowerCase()];
+  if (videoSrc) {
+    const videoArea = document.getElementById('pd-video-area');
+    const wrapper = videoArea.querySelector('.video-wrapper');
+    // Remove placeholder, add real video
+    wrapper.innerHTML = `
+      <video autoplay muted loop playsinline>
+        <source src="${videoSrc}" type="video/mp4">
+      </video>
+    `;
+  }
 
   try {
     const res = await fetch(`https://api.github.com/repos/chinmayaranjanswain/${repoName}`);
@@ -335,10 +357,10 @@ async function initProjectDetail() {
     }
 
     // Animate elements in
-    gsap.from('.pd-hero', { y: 60, opacity: 0, duration: 1, ease: "power3.out", delay: 0.3 });
-    gsap.from('.pd-video-area', { y: 40, opacity: 0, duration: 0.8, ease: "power3.out", delay: 0.6 });
-    gsap.from('.pd-info-grid', { y: 40, opacity: 0, duration: 0.8, ease: "power3.out", delay: 0.8 });
-    gsap.from('.pd-readme', { y: 40, opacity: 0, duration: 0.8, ease: "power3.out", delay: 1.0 });
+    // Animate to visible (initial hidden state set via CSS)
+    gsap.to('.pd-hero', { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.3 });
+    gsap.to('.pd-showcase', { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.6 });
+    gsap.to('.pd-readme', { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 1.0 });
 
   } catch (e) {
     console.error('Failed to load project:', e);
@@ -569,7 +591,7 @@ document.addEventListener('mousemove', (e) => {
   gsap.to(cursor, {
     x: e.clientX,
     y: e.clientY,
-    duration: 0.1,
+    duration: 1,
     ease: "power2.out"
   });
 });
@@ -693,6 +715,56 @@ function initPageTransitions() {
   });
 }
 
+/* =========================================
+   8. DARK / LIGHT MODE TOGGLE
+   ========================================= */
+function updateThreeColors(isLight) {
+  if (isLight) {
+    wireMaterial.color.setHex(0x1a1a2e);
+    wireMaterial.opacity = 0.5;
+    volumeMaterial.color.setHex(0x1a1a2e);
+    volumeMaterial.opacity = 0.08;
+    if (canvas) canvas.style.filter = 'drop-shadow(0 0 10px rgba(0, 0, 0, 0.15))';
+  } else {
+    wireMaterial.color.setHex(0xffffff);
+    wireMaterial.opacity = 0.4;
+    volumeMaterial.color.setHex(0xffffff);
+    volumeMaterial.opacity = 0.05;
+    if (canvas) canvas.style.filter = 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.2))';
+  }
+}
+
+function initThemeToggle() {
+  // Apply saved theme FIRST — this must run on every page
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+    updateThreeColors(true);
+  }
+
+  const toggle = document.getElementById('theme-toggle');
+  if (!toggle) return; // No toggle button on this page, but theme is already applied
+
+  const icon = toggle.querySelector('.theme-icon');
+  const label = toggle.querySelector('.theme-label');
+
+  // Sync button UI with saved theme
+  if (savedTheme === 'light') {
+    if (icon) icon.textContent = '☀️';
+    if (label) label.textContent = 'Light';
+  }
+
+  toggle.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+    if (icon) icon.textContent = isLight ? '☀️' : '🌙';
+    if (label) label.textContent = isLight ? 'Light' : 'Dark';
+    updateThreeColors(isLight);
+  });
+}
+
 // Initialize everything
+initThemeToggle();
 initPageTransitions();
 initLoader();

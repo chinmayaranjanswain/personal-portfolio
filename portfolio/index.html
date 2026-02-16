@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chinmaya | Portfolio</title>
+  <title>Chinmaya | home </title>
   <style>
     html,
     body {
@@ -25,7 +25,7 @@
     .page-loader {
       position: fixed;
       inset: 0;
-      background: #000;
+      background: #fff;
       z-index: 9999;
       display: flex;
       align-items: center;
@@ -41,9 +41,10 @@
     <div class="loader-text">
       <span>c</span><span>h</span><span>i</span><span>n</span><span>m</span><span>a</span><span>y</span><span>a</span><span>.</span>
     </div>
+
   </div>
 
-  <div class="noise-overlay"></div>
+
 
   <nav class="nav">
     <div class="nav-left">
@@ -51,13 +52,20 @@
       <span class="current-time">2/14/26, 1:50 PM</span>
     </div>
 
-    <button class="menu-toggle" aria-label="Toggle Menu">
-      <div class="hamburger-box">
-        <span class="line line-1"></span>
-        <span class="line line-2"></span>
-        <span class="line line-3"></span>
-      </div>
-    </button>
+    <div class="nav-right-controls">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+        <span class="theme-icon">🌙</span>
+        <span class="theme-label">Dark</span>
+      </button>
+
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <div class="hamburger-box">
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </div>
+      </button>
+    </div>
   </nav>
 
   <div class="menu-overlay">
@@ -74,7 +82,7 @@
       <a href="/contact.html" class="menu-item">
         <span class="menu-num">04</span> Contact
       </a>
-      <a href="/cv.pdf" class="menu-item">
+      <a href="/assets/chinmaya_swain.pdf" target="_blank" class="menu-item">
         <span class="menu-num">05</span> CV
       </a>
     </div>
@@ -117,11 +125,8 @@
       <div class="showreel-video">
         <div class="video-wrapper">
           <video autoplay muted loop playsinline>
-            <source src="" type="video/mp4">
+            <source src="/assets/videos/match-cut.mp4" type="video/mp4">
           </video>
-          <div class="video-placeholder">
-            <video autoplay muted src="portfolio\assets\videos\match-cut.mp4"></video>
-          </div>
         </div>
       </div>
     </section>
@@ -188,28 +193,27 @@
 
       <div class="gallery-grid">
         <div class="gallery-item" data-color="#6366f1">
-          <div class="gallery-img" style="background-color: transparent;"> <img
-              src="portfolio\assets\photos\replace the music pic.webp" alt=""></div>
-          <span class="gallery-caption">Code & Coffee</span>
+          <div class="gallery-img"><img src="/assets/photos/replace the music pic.jpg" alt="Code & Coffee"></div>
+          <span class="gallery-caption">nature</span>
         </div>
         <div class="gallery-item" data-color="#ec4899">
-          <div class="gallery-img" style="background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
-          <span class="gallery-caption">Late Night Builds</span>
+          <div class="gallery-img"><img src="/assets/photos/replace the neture pic.png" alt="Late Night Builds"></div>
+          <span class="gallery-caption">Late Night travels</span>
         </div>
         <div class="gallery-item" data-color="#14b8a6">
-          <div class="gallery-img" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
-          <span class="gallery-caption">Hackathon Vibes</span>
+          <div class="gallery-img"><img src="/assets/photos/retouch_2025010110364641.jpg" alt="Hackathon Vibes"></div>
+          <span class="gallery-caption">enjoyy Vibes</span>
         </div>
         <div class="gallery-item" data-color="#f59e0b">
-          <div class="gallery-img" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
-          <span class="gallery-caption">Design Process</span>
+          <div class="gallery-img"><img src="/assets/photos/retouch_2024113010444844.jpg" alt="Design Process"></div>
+          <span class="gallery-caption">counting stars</span>
         </div>
         <div class="gallery-item" data-color="#8b5cf6">
-          <div class="gallery-img" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);"></div>
-          <span class="gallery-caption">Team Work</span>
+          <div class="gallery-img"><img src="/assets/photos/retouch_2024122017045988.jpg" alt="Team Work"></div>
+          <span class="gallery-caption">rivers</span>
         </div>
         <div class="gallery-item" data-color="#10b981">
-          <div class="gallery-img" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
+          <div class="gallery-img"><img src="/assets/photos/retouch_2024112713071997.jpg" alt="Open Source"></div>
           <span class="gallery-caption">Open Source</span>
         </div>
       </div>

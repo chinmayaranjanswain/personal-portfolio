@@ -50,13 +50,20 @@
             <a href="/" class="brand">chinmaya.</a>
             <span class="current-time"></span>
         </div>
-        <button class="menu-toggle" aria-label="Toggle Menu">
-            <div class="hamburger-box">
-                <span class="line line-1"></span>
-                <span class="line line-2"></span>
-                <span class="line line-3"></span>
-            </div>
-        </button>
+        <div class="nav-right-controls">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+                <span class="theme-icon">🌙</span>
+                <span class="theme-label">Dark</span>
+            </button>
+
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <div class="hamburger-box">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                    <span class="line line-3"></span>
+                </div>
+            </button>
+        </div>
     </nav>
 
     <div class="menu-overlay">
@@ -65,7 +72,8 @@
             <a href="/playground.html" class="menu-item"><span class="menu-num">02</span> Playground</a>
             <a href="/about.html" class="menu-item"><span class="menu-num">03</span> About</a>
             <a href="/contact.html" class="menu-item"><span class="menu-num">04</span> Contact</a>
-            <a href="/cv.pdf" class="menu-item"><span class="menu-num">05</span> CV</a>
+            <a href="/assets/chinmaya_swain.pdf" target="_blank" class="menu-item"><span class="menu-num">05</span>
+                CV</a>
         </div>
         <div class="menu-info">
             <h3>Connect</h3>
@@ -94,9 +102,23 @@
 
         <section class="about-content">
 
+            <!-- Philosophy / Bio -->
+            <div class="about-philosophy">
+                <span class="section-label">01 / PHILOSOPHY</span>
+                <h2 class="about-statement">I am a design-driven, goal-focused creator, producer, and designer who
+                    believes that the <em>details</em> make all the difference.</h2>
+                <p class="about-bio">
+                    As a skilled software engineer with a passion for innovative solutions, I leverage my technical
+                    expertise to craft efficient, scalable, and user-centric software applications that drive business
+                    growth and excellence. My approach combines creative design thinking with solid technical
+                    implementation to deliver memorable digital experiences.
+                </p>
+            </div>
+
+            <!-- Who I Am + What I Do -->
             <div class="about-intro">
                 <div class="about-col">
-                    <span class="section-label">01 / WHO I AM</span>
+                    <span class="section-label">02 / WHO I AM</span>
                     <p>
                         I'm Chinmaya Swain — a system architect, developer, and creative technologist from Cuttack,
                         India.
@@ -105,7 +127,7 @@
                     </p>
                 </div>
                 <div class="about-col">
-                    <span class="section-label">02 / WHAT I DO</span>
+                    <span class="section-label">03 / WHAT I DO</span>
                     <p>
                         Full-stack development with MERN, Python automation, computer vision with OpenCV,
                         and creative coding with Three.js. I believe in systems that are both powerful and elegant.
@@ -113,8 +135,9 @@
                 </div>
             </div>
 
+            <!-- Skills -->
             <div class="about-skills">
-                <span class="section-label">03 / TECH STACK</span>
+                <span class="section-label">04 / SKILLS THAT I KNOW</span>
                 <div class="skills-grid">
                     <div class="skill-item">JavaScript</div>
                     <div class="skill-item">React</div>
@@ -128,6 +151,81 @@
                     <div class="skill-item">GSAP</div>
                     <div class="skill-item">Git</div>
                     <div class="skill-item">Figma</div>
+                    <div class="skill-item">HTML / CSS</div>
+                    <div class="skill-item">SCSS</div>
+                    <div class="skill-item">REST APIs</div>
+                    <div class="skill-item">UI/UX Design</div>
+                </div>
+            </div>
+
+            <!-- Education & Experience Timeline -->
+            <div class="about-timeline">
+                <span class="section-label">05 / EDUCATION & EXPERIENCE</span>
+                <h2 class="timeline-title">My Academic Journey &<br>Professional Development</h2>
+
+                <div class="timeline">
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">
+                            <span class="timeline-dot"></span>
+                            <span class="timeline-line"></span>
+                        </div>
+                        <div class="timeline-content">
+                            <span class="timeline-tag">Currently Pursuing</span>
+                            <h3>Bachelor of Computer Applications (BCA)</h3>
+                            <h4>Computer Science & Applications</h4>
+                            <p>Pursuing a comprehensive undergraduate program focused on core principles of computer
+                                science, including programming, data structures, algorithms, and web development.
+                                Actively building foundational skills while exploring interests in modern software
+                                engineering and emerging technologies.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">
+                            <span class="timeline-dot"></span>
+                            <span class="timeline-line"></span>
+                        </div>
+                        <div class="timeline-content">
+                            <span class="timeline-tag">Completed</span>
+                            <h3>Higher Secondary Education</h3>
+                            <h4>Christ Higher Secondary School, Cuttack</h4>
+                            <p>Completed my higher secondary education with a focus on Science, specializing in
+                                Mathematics, Physics, and Chemistry. Developed strong analytical and problem-solving
+                                skills, and laid the academic groundwork for a career in computer science.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">
+                            <span class="timeline-dot"></span>
+                            <span class="timeline-line"></span>
+                        </div>
+                        <div class="timeline-content">
+                            <span class="timeline-tag">Certification</span>
+                            <h3>Web Development Certification</h3>
+                            <h4>Full Stack Development</h4>
+                            <p>Completed comprehensive certification in modern web technologies including React,
+                                Node.js,
+                                Express, MongoDB, and responsive design principles. Created several full-stack
+                                applications as part of the certification.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">
+                            <span class="timeline-dot"></span>
+                        </div>
+                        <div class="timeline-content">
+                            <span class="timeline-tag">Specialization</span>
+                            <h3>UI/UX Design Specialization</h3>
+                            <h4>User Experience Design</h4>
+                            <p>Advanced training in user interface design, user experience principles, and creating
+                                intuitive digital experiences that engage users. Focused on design systems, prototyping,
+                                and usability testing methodologies.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

@@ -50,13 +50,20 @@
             <a href="/" class="brand">chinmaya.</a>
             <span class="current-time"></span>
         </div>
-        <button class="menu-toggle" aria-label="Toggle Menu">
-            <div class="hamburger-box">
-                <span class="line line-1"></span>
-                <span class="line line-2"></span>
-                <span class="line line-3"></span>
-            </div>
-        </button>
+        <div class="nav-right-controls">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+                <span class="theme-icon">🌙</span>
+                <span class="theme-label">Dark</span>
+            </button>
+
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <div class="hamburger-box">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                    <span class="line line-3"></span>
+                </div>
+            </button>
+        </div>
     </nav>
 
     <div class="menu-overlay">
@@ -65,7 +72,8 @@
             <a href="/playground.html" class="menu-item"><span class="menu-num">02</span> Playground</a>
             <a href="/about.html" class="menu-item"><span class="menu-num">03</span> About</a>
             <a href="/contact.html" class="menu-item"><span class="menu-num">04</span> Contact</a>
-            <a href="/cv.pdf" class="menu-item"><span class="menu-num">05</span> CV</a>
+            <a href="/assets/chinmaya_swain.pdf" target="_blank" class="menu-item"><span class="menu-num">05</span>
+                CV</a>
         </div>
         <div class="menu-info">
             <h3>Connect</h3>
@@ -96,24 +104,23 @@
         </section>
 
         <section class="pd-content">
-            <!-- Video / Showcase -->
-            <div class="pd-video-area" id="pd-video-area">
-                <div class="video-wrapper">
-                    <div class="video-placeholder">
-                        <span class="play-icon">▶</span>
-                        <span>PROJECT DEMO</span>
+            <!-- Showcase: Video Left + Info Right -->
+            <div class="pd-showcase">
+                <div class="pd-video-area" id="pd-video-area">
+                    <div class="video-wrapper">
+                        <div class="video-placeholder" id="pd-video-placeholder">
+                            <span class="play-icon">▶</span>
+                            <span>PROJECT DEMO</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Info Grid -->
-            <div class="pd-info-grid">
-                <div class="pd-description">
-                    <h3>About This Project</h3>
-                    <p id="pd-description">Loading description...</p>
-                </div>
+                <div class="pd-info-side">
+                    <div class="pd-description">
+                        <h3>About This Project</h3>
+                        <p id="pd-description">Loading description...</p>
+                    </div>
 
-                <div class="pd-sidebar">
                     <div class="pd-meta-block">
                         <h4>Tech Stack</h4>
                         <div class="pd-tags" id="pd-tags">

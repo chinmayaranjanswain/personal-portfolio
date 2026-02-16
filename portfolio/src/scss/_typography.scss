@@ -2,11 +2,9 @@
    1. REGISTER CUSTOM FONTS
    ========================================= */
 
-// FIX 1: Path should be '/fonts/...' (Forward slashes, no project folder name)
-// FIX 2: Format for .otf is 'opentype'
 @font-face {
     font-family: 'valofont';
-    src: url('/fonts/Valorax-lg25V.otf') format('opentype');
+    src: url('../assets/fonts/Valorax-lg25V.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -14,7 +12,7 @@
 
 @font-face {
     font-family: 'Neu';
-    src: url('/fonts/3856NeueMachina.woff2') format('woff2');
+    src: url('../assets/fonts/Neu.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -22,7 +20,7 @@
 
 @font-face {
     font-family: 'juana';
-    src: url('/fonts/Fontspring-DEMO-juana-extralightit_toKzXEsfr.ttf') format('truetype');
+    src: url('../assets/fonts/juana.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -30,7 +28,7 @@
 
 @font-face {
     font-family: 'circuit';
-    src: url('/fonts/CircuitForemRegular-zr2n1.otf') format('truetype');
+    src: url('../assets/fonts/Circuit.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;

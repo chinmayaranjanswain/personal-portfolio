@@ -138,6 +138,26 @@ body.light-mode {
     }
 }
 
+
+
+body {
+    /* High-end dark gradient to replace the 3D depth */
+    background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
+    min-height: 100vh;
+}
+
+/* Optional: Hide canvas via CSS too, just to be safe */
+@media (max-width: 768px) {
+    #webgl-canvas {
+        display: none !important;
+    }
+}
+
+
+
+
+
+
 body {
     background-color: var(--bg-primary);
     color: var(--text-primary);

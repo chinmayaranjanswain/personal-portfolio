@@ -8,117 +8,153 @@ import Lenis from 'lenis';
    ========================================= */
 gsap.registerPlugin(ScrollTrigger);
 import * as THREE from 'three';
-
-// 1. Scene Setup
-const canvas = document.querySelector('#webgl-canvas');
-const scene = new THREE.Scene();
-
-// 2. Geometry: A complex Torus Knot
-// (radius, tube, tubularSegments, radialSegments, p, q)
-const geometry = new THREE.TorusKnotGeometry(10, 3, 200, 32);
-
-// 3. Material Layer 1: The White Glowing Wireframe
-const wireMaterial = new THREE.MeshBasicMaterial({
-  color: 0xffffff,
-  wireframe: true,
-  transparent: true,
-  opacity: 0.4,
-});
-
-// 4. Material Layer 2: The "Realistic" Volume (Ghost layer)
-const volumeMaterial = new THREE.MeshPhysicalMaterial({
-  color: 0xffffff,
-  transparent: true,
-  opacity: 0.05,
-  transmission: 0.9,
-  thickness: 1,
-  roughness: 0.1
-});
-
-// Create the meshes
-const wireframeMesh = new THREE.Mesh(geometry, wireMaterial);
-const volumeMesh = new THREE.Mesh(geometry, volumeMaterial);
-
-// Group them so they move together
-const abstractObject = new THREE.Group();
-abstractObject.add(wireframeMesh);
-abstractObject.add(volumeMesh);
-abstractObject.position.x = 25; // Right side so text is visible
-scene.add(abstractObject);
-
-// 5. Lighting (Gives the volume layer its "realistic" sheen)
-const light = new THREE.PointLight(0xffffff, 50, 100);
-light.position.set(20, 10, 20);
-scene.add(light);
-
-// 6. Camera & Renderer Setup
-const sizes = { width: window.innerWidth, height: window.innerHeight };
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
-camera.position.z = 30;
-
-const renderer = new THREE.WebGLRenderer({
-  canvas: canvas,
-  alpha: true,
-  antialias: true
-});
-renderer.setSize(sizes.width, sizes.height);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
 /* =========================================
-   7. CURSOR TRACKING + AUTONOMOUS ANIMATION
+   5. THREE.JS BACKGROUND (Desktop Only)
    ========================================= */
-const clock = new THREE.Clock();
 
-// Mouse position in 3D-friendly coordinates (-1 to 1 range)
-const mouse = { x: 0, y: 0 };
-// Smoothed position (what the object actually follows)
-const smoothMouse = { x: 0, y: 0 };
+// Define what "Mobile" means (e.g., screens smaller than 768px)
+const isMobile = window.innerWidth < 768;
 
-document.addEventListener('mousemove', (e) => {
-  // Normalize to -1 … +1
-  mouse.x = (e.clientX / sizes.width) * 2 - 1;
-  mouse.y = -(e.clientY / sizes.height) * 2 + 1;
-});
+// ONLY run this if NOT mobile
+if (!isMobile) {
+  try {
+    const canvas = document.querySelector('#webgl-canvas');
+    if (canvas) {
 
-// Simple lerp helper
-function lerp(start, end, factor) {
-  return start + (end - start) * factor;
+
+
+      // 1. Scene Setup
+      const canvas = document.querySelector('#webgl-canvas');
+      const scene = new THREE.Scene();
+
+      // 2. Geometry: A complex Torus Knot
+      // (radius, tube, tubularSegments, radialSegments, p, q)
+      const geometry = new THREE.TorusKnotGeometry(10, 3, 200, 32);
+
+      // 3. Material Layer 1: The White Glowing Wireframe
+      const wireMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.4,
+      });
+
+      // 4. Material Layer 2: The "Realistic" Volume (Ghost layer)
+      const volumeMaterial = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.05,
+        transmission: 0.9,
+        thickness: 1,
+        roughness: 0.1
+      });
+
+      // Create the meshes
+      const wireframeMesh = new THREE.Mesh(geometry, wireMaterial);
+      const volumeMesh = new THREE.Mesh(geometry, volumeMaterial);
+
+      // Group them so they move together
+      const abstractObject = new THREE.Group();
+      abstractObject.add(wireframeMesh);
+      abstractObject.add(volumeMesh);
+      abstractObject.position.x = 25; // Right side so text is visible
+      scene.add(abstractObject);
+
+      // 5. Lighting (Gives the volume layer its "realistic" sheen)
+      const light = new THREE.PointLight(0xffffff, 50, 100);
+      light.position.set(20, 10, 20);
+      scene.add(light);
+
+      // 6. Camera & Renderer Setup
+      const sizes = { width: window.innerWidth, height: window.innerHeight };
+      const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
+      camera.position.z = 30;
+
+
+
+
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true, // Keep true for desktop
+        powerPreference: "high-performance" // Tells browser to prioritize FPS
+      });
+      renderer.setSize(sizes.width, sizes.height);
+      // CRITICAL LINE:
+      // This prevents 4k rendering on phones. 2x looks perfect, 3x is waste.
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+
+      /* =========================================
+         7. CURSOR TRACKING + AUTONOMOUS ANIMATION
+         ========================================= */
+      const clock = new THREE.Clock();
+
+      // Mouse position in 3D-friendly coordinates (-1 to 1 range)
+      const mouse = { x: 0, y: 0 };
+      // Smoothed position (what the object actually follows)
+      const smoothMouse = { x: 0, y: 0 };
+
+      document.addEventListener('mousemove', (e) => {
+        // Normalize to -1 … +1
+        mouse.x = (e.clientX / sizes.width) * 2 - 1;
+        mouse.y = -(e.clientY / sizes.height) * 2 + 1;
+      });
+
+      // Simple lerp helper
+      function lerp(start, end, factor) {
+        return start + (end - start) * factor;
+      }
+
+      const tick = () => {
+        const elapsedTime = clock.getElapsedTime();
+
+        // Smoothly interpolate toward the mouse (lower = slower/smoother)
+        smoothMouse.x = lerp(smoothMouse.x, mouse.x, 0.03);
+        smoothMouse.y = lerp(smoothMouse.y, mouse.y, 0.03);
+
+        // Base position (right side) + cursor influence (object drifts toward mouse)
+        abstractObject.position.x = 25 + smoothMouse.x * 5;
+        abstractObject.position.y = Math.sin(elapsedTime * 0.15) * 1.0 + smoothMouse.y * 3;
+
+        // Very slow, elegant rotation
+        abstractObject.rotation.y = elapsedTime * 0.04;
+        abstractObject.rotation.x = elapsedTime * 0.05;
+        abstractObject.rotation.z = Math.sin(elapsedTime * 0.08) * 0.05;
+
+        // Gentle "Breathing" scale
+        const scale = 1 + Math.sin(elapsedTime * 0.2) * 0.02;
+        abstractObject.scale.set(scale, scale, scale);
+
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+      };
+
+      tick();
+
+      // Resize Handler
+      window.addEventListener('resize', () => {
+        sizes.width = window.innerWidth;
+        sizes.height = window.innerHeight;
+        camera.aspect = sizes.width / sizes.height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(sizes.width, sizes.height);
+      });
+
+
+      console.log("Desktop detected: 3D Scene Initialized");
+    }
+  } catch (error) {
+    console.error("Three.js Error:", error);
+  }
+} else {
+  // If it IS mobile, we just log it and do nothing
+  console.log("Mobile detected: 3D Scene Skipped for Performance");
 }
 
-const tick = () => {
-  const elapsedTime = clock.getElapsedTime();
 
-  // Smoothly interpolate toward the mouse (lower = slower/smoother)
-  smoothMouse.x = lerp(smoothMouse.x, mouse.x, 0.03);
-  smoothMouse.y = lerp(smoothMouse.y, mouse.y, 0.03);
 
-  // Base position (right side) + cursor influence (object drifts toward mouse)
-  abstractObject.position.x = 25 + smoothMouse.x * 5;
-  abstractObject.position.y = Math.sin(elapsedTime * 0.15) * 1.0 + smoothMouse.y * 3;
-
-  // Very slow, elegant rotation
-  abstractObject.rotation.y = elapsedTime * 0.04;
-  abstractObject.rotation.x = elapsedTime * 0.05;
-  abstractObject.rotation.z = Math.sin(elapsedTime * 0.08) * 0.05;
-
-  // Gentle "Breathing" scale
-  const scale = 1 + Math.sin(elapsedTime * 0.2) * 0.02;
-  abstractObject.scale.set(scale, scale, scale);
-
-  renderer.render(scene, camera);
-  window.requestAnimationFrame(tick);
-};
-
-tick();
-
-// Resize Handler
-window.addEventListener('resize', () => {
-  sizes.width = window.innerWidth;
-  sizes.height = window.innerHeight;
-  camera.aspect = sizes.width / sizes.height;
-  camera.updateProjectionMatrix();
-  renderer.setSize(sizes.width, sizes.height);
-});
 const lenis = new Lenis({
   duration: 1.2,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -195,45 +231,63 @@ if (menuOverlay) {
 }
 
 /* =========================================
-   3. HERO ANIMATION (Works on all pages)
+   3. HERO ANIMATION (High-Performance Mode)
    ========================================= */
 function initHeroAnimation() {
   const heroText = document.querySelectorAll('.reveal-text h1');
 
-  if (heroText.length > 0) {
-    gsap.to(heroText, {
-      y: 0,
-      duration: 1.2,
-      stagger: 0.3,
-      ease: "power4.out",
-      delay: 0.2
-    });
-  }
+  // 1. Wait for Custom Fonts to finish loading (Prevents layout shift/lag)
+  document.fonts.ready.then(() => {
 
-  // Animate inner-page content sections with a subtle fade-in
-  const contentSections = document.querySelectorAll(
-    '.about-content, .contact-content, .projects-container, .playground-container'
-  );
-  if (contentSections.length > 0) {
-    // Animate to visible state (initial hidden state is set via CSS below)
-    gsap.to(contentSections, {
-      y: 0,
-      opacity: 1,
-      duration: 1,
-      ease: "power3.out",
-      delay: 0.8
-    });
-  }
+    if (heroText.length > 0) {
+      // 2. Use .fromTo() instead of .to()
+      // This forces the browser to know EXACTLY where to start and end, reducing calculation time.
+      gsap.fromTo(heroText,
+        {
+          y: 100, // Explicit starting position
+          opacity: 0,
+          willChange: "transform" // Tells browser to prep the GPU
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.1, // Slightly faster feels smoother
+          stagger: 0.1,  // Faster stagger (0.3 is too slow for modern feel)
+          ease: "power3.out", // "power3" is snappier than "power4"
+          delay: 0.2,
+          force3D: true, // CRITICAL: Forces GPU Hardware Acceleration
+          clearProps: "willChange" // Cleanup to save memory after animation
+        }
+      );
+    }
 
-  // --- HOME PAGE SPECIFIC ---
-  initGithubBoard();
-  initGithubRepos();
-  initGithubStats();
-  initScrollAnimations();
-
-  // --- PROJECT DETAIL PAGE ---
-  initProjectDetail();
+  });
 }
+
+// Animate inner-page content sections with a subtle fade-in
+const contentSections = document.querySelectorAll(
+  '.about-content, .contact-content, .projects-container, .playground-container'
+);
+if (contentSections.length > 0) {
+  // Animate to visible state (initial hidden state is set via CSS below)
+  gsap.to(contentSections, {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    ease: "power3.out",
+    delay: 0.8
+  });
+}
+
+// --- HOME PAGE SPECIFIC ---
+initGithubBoard();
+initGithubRepos();
+initGithubStats();
+initScrollAnimations();
+
+// --- PROJECT DETAIL PAGE ---
+initProjectDetail();
+
 
 /* =========================================
    PROJECT DETAIL PAGE (Live GitHub API)

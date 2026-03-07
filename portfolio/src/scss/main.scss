@@ -120,30 +120,57 @@ body.light-mode {
     background-color: #fff;
     z-index: 10000;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    will-change: transform;
+    gap: 2rem;
+    transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.loader-text {
+.page-loader.loader-exit {
+    transform: translateY(-100%);
+}
+
+.loader-brand {
     font-family: 'valofont', sans-serif;
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 6vw, 4rem);
     color: #0a0a0a;
     text-transform: lowercase;
     letter-spacing: 0.05em;
+}
 
-    span {
-        display: inline-block;
-        will-change: transform;
-    }
+.loader-counter {
+    font-family: 'valofont', monospace;
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 200;
+    color: #0a0a0a;
+    line-height: 1;
+}
+
+.loader-bar-track {
+    width: min(80%, 400px);
+    height: 3px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.loader-bar-fill {
+    height: 100%;
+    background: #0a0a0a;
+    border-radius: 2px;
+    transition: width 0.1s linear;
 }
 
 
 
 body {
-    /* High-end dark gradient to replace the 3D depth */
-    background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'valofont', Arial, sans-serif;
+    overflow-x: hidden;
     min-height: 100vh;
+    transition: background-color 0.4s ease, color 0.4s ease, background 0.4s ease;
 }
 
 /* Optional: Hide canvas via CSS too, just to be safe */
@@ -153,18 +180,20 @@ body {
     }
 }
 
-
-
-
-
-
-body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    font-family: 'valofont', Arial, sans-serif;
-    overflow-x: hidden;
-    transition: background-color 0.4s ease, color 0.4s ease;
+/* Subtle film grain overlay */
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0.03;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
 }
+
+
+
 
 // Prevent bottom-nav from overlapping page content
 main {

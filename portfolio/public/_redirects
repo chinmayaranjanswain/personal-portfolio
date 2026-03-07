@@ -1,0 +1,2 @@
+# Netlify serves static multi-page sites correctly by default.
+# This file ensures no accidental catch-all redirects.

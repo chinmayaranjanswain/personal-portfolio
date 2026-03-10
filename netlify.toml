@@ -1,4 +1,0 @@
-[build]
-  base = "portfolio"
-  publish = "dist"
-  command = "npm run build"

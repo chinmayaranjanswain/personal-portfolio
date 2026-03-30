@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+  <title>Chinmaya Swain | Portfolio</title>
+  <meta name="description" content="Chinmaya Swain — Full-stack developer & creative technologist from Cuttack, India." />
+
+  <!-- Preload critical fonts — start downloading BEFORE CSS is parsed -->
+  <link rel="preload" href="/src/assets/fonts/Valorax-lg25V.otf" as="font" type="font/otf" crossorigin />
+  <link rel="preload" href="/src/assets/fonts/Circuit.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/src/assets/fonts/Neue.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/src/assets/fonts/juana.woff2" as="font" type="font/woff2" crossorigin />
+
+  <style>
+    /* Critical inline CSS — renders before JS loads */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #000; color: #fff; }
+
+    /* Loader renders immediately via HTML, no JS needed for first paint */
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>

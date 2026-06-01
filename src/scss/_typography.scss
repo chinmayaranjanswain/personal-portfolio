@@ -1,0 +1,91 @@
+/* =========================================
+   1. REGISTER CUSTOM FONTS
+   ========================================= */
+
+@font-face {
+    font-family: 'valofont';
+    src: url('../assets/fonts/Valorax-lg25V.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Neu';
+    src: url('../assets/fonts/Neue.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'juana';
+    src: url('../assets/fonts/juana.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'circuit';
+    src: url('../assets/fonts/Circuit.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* =========================================
+   2. DEFINE VARIABLES
+   ========================================= */
+
+// FIX 3: Added 'valofont' to the front of the stack
+$font-stack: 'valofont', 'Neu', 'Helvetica Neue', sans-serif;
+$secondary-font: 'juana', serif;
+
+/* =========================================
+   3. APPLY TO MOVING TEXT
+   ========================================= */
+
+// Applying globally to H1
+h1 {
+    font-family: $font-stack;
+}
+
+p {
+    font-family: $secondary-font;
+}
+
+// SPECIFIC FIX: Targeting the moving text specifically to be safe
+.hero-content h1 {
+    font-family: 'valofont', sans-serif;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.reveal-text h1 {
+
+    font-family: 'circuit', sans-serif;
+    text-transform: uppercase;
+    font-weight: normal;
+
+    /* Custom fonts often look bad with bold applied automatically */
+    /* Optional: 'Valorax' usually looks best uppercase */
+}
+
+.footer-col a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    text-transform: uppercase;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.showreel-text p {
+    font-family: 'juana', serif;
+    text-transform: uppercase;
+}

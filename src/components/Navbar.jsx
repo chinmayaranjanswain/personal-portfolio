@@ -14,13 +14,12 @@ export default function Navbar({ menuOpen, setMenuOpen, isLightMode, toggleTheme
         day: 'numeric',
         hour: 'numeric',
         minute: '2-digit',
-        second: '2-digit',
         hour12: true,
       };
       setCurrentTime(now.toLocaleString('en-IN', options));
     }
     updateClock();
-    const interval = setInterval(updateClock, 1000);
+    const interval = setInterval(updateClock, 60000);
     return () => clearInterval(interval);
   }, []);
 

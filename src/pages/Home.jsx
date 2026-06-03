@@ -81,6 +81,7 @@ export default function Home() {
 
   // Scroll-triggered section animations
   useEffect(() => {
+    const isMobile = window.innerWidth <= 768;
     const timer = setTimeout(() => {
 
       // Section fade-in with smooth slide
@@ -90,12 +91,14 @@ export default function Home() {
       sections.forEach((section) => {
         gsap.fromTo(
           section,
-          { y: 80, opacity: 0 },
+          { y: isMobile ? 40 : 80, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 1.2,
+            duration: isMobile ? 0.8 : 1.2,
             ease: 'expo.out',
+            force3D: true,
+            clearProps: 'will-change',
             scrollTrigger: {
               trigger: section,
               start: 'top 90%',
@@ -106,26 +109,29 @@ export default function Home() {
         );
       });
 
-      // Section headings — parallax float
-      const headings = document.querySelectorAll(
-        '.showreel-text h2, .github-header h2, .youtube-header h2, .recent-header h2, .gallery-header h2, .footer-cta h2'
-      );
-      headings.forEach((heading) => {
-        gsap.fromTo(
-          heading,
-          { y: 40 },
-          {
-            y: -20,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: heading,
-              start: 'top 95%',
-              end: 'top 20%',
-              scrub: 1.5,
-            },
-          }
+      // Section headings — parallax float (skip on mobile — scrub is expensive)
+      if (!isMobile) {
+        const headings = document.querySelectorAll(
+          '.showreel-text h2, .github-header h2, .youtube-header h2, .recent-header h2, .gallery-header h2, .footer-cta h2'
         );
-      });
+        headings.forEach((heading) => {
+          gsap.fromTo(
+            heading,
+            { y: 40 },
+            {
+              y: -20,
+              ease: 'none',
+              force3D: true,
+              scrollTrigger: {
+                trigger: heading,
+                start: 'top 95%',
+                end: 'top 20%',
+                scrub: 1.5,
+              },
+            }
+          );
+        });
+      }
 
       // Gallery items — simple fade-in (no scale to avoid heavy repaints)
       const galleryItems = document.querySelectorAll('.gallery-item');
@@ -137,8 +143,9 @@ export default function Home() {
             y: 0,
             opacity: 1,
             duration: 0.7,
-            stagger: 0.08,
+            stagger: isMobile ? 0.04 : 0.08,
             ease: 'power2.out',
+            force3D: true,
             scrollTrigger: {
               trigger: '.gallery-grid',
               start: 'top 85%',
@@ -152,13 +159,14 @@ export default function Home() {
       if (recentProjects.length > 0) {
         gsap.fromTo(
           recentProjects,
-          { x: -40, opacity: 0 },
+          { x: isMobile ? -20 : -40, opacity: 0 },
           {
             x: 0,
             opacity: 1,
-            duration: 0.8,
-            stagger: 0.1,
+            duration: isMobile ? 0.5 : 0.8,
+            stagger: isMobile ? 0.06 : 0.1,
             ease: 'power4.out',
+            force3D: true,
             scrollTrigger: {
               trigger: '.recent-projects-grid',
               start: 'top 85%',
@@ -179,6 +187,7 @@ export default function Home() {
             scale: 1,
             duration: 1,
             ease: 'power3.out',
+            force3D: true,
             scrollTrigger: {
               trigger: profileCard,
               start: 'top 85%',
@@ -199,7 +208,7 @@ export default function Home() {
           start: 'top 85%',
           onEnter: () => {
             gsap.to(el, {
-              duration: 2,
+              duration: isMobile ? 1.2 : 2,
               ease: 'power2.out',
               onUpdate: function () {
                 el.textContent = Math.round(target * this.progress());
@@ -219,12 +228,20 @@ export default function Home() {
     };
   }, [stats, repos]);
 
-  // Contribution board animation
+  // Contribution board animation — skip heavy stagger on mobile
   useEffect(() => {
     const board = contribBoardRef.current;
     if (!board) return;
     const cells = board.querySelectorAll('.contrib-cell');
     if (cells.length === 0) return;
+
+    const isMobile = window.innerWidth <= 768;
+
+    // On mobile, just show cells without animation (364 scale animations = jank)
+    if (isMobile) {
+      gsap.set(cells, { scale: 1 });
+      return;
+    }
 
     const timer = setTimeout(() => {
       gsap.fromTo(
@@ -361,7 +378,7 @@ export default function Home() {
         >
           <div className="yt-icon">
             <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
-              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
             </svg>
           </div>
           <div className="yt-profile-info">

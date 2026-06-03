@@ -1,6 +1,24 @@
 // Reset margins
 @use 'typography' as *;
 
+/* Lenis smooth scroll base styles */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
 /* REMOVE MOBILE TAP HIGHLIGHT */
 * {
     -webkit-tap-highlight-color: transparent;
@@ -227,7 +245,8 @@ body {
     mix-blend-mode: overlay;
 
     @media (max-width: 768px) {
-        display: none; /* Disable on mobile for performance */
+        display: none;
+        /* Disable on mobile for performance */
     }
 }
 
@@ -240,10 +259,7 @@ main {
 }
 
 
-/* Smooth scroll — native CSS */
-html {
-    scroll-behavior: smooth;
-}
+/* Lenis handles smooth scrolling — no native scroll-behavior needed */
 
 .custom-cursor {
     width: 20px;
@@ -319,17 +335,27 @@ body:not(.light-mode) .nav {
     z-index: 301; // Just to be safe
 }
 
-// 3. LINES (Color Enforcement)
+// 2. The Box holding the lines
+.hamburger-box {
+    width: 30px; // Width of the icon
+    height: 24px; // Height of the icon area
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+// 3. The Lines
 .line {
     display: block;
     width: 100%;
     height: 2px;
-    background-color: var(--text-secondary) !important;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, background-color 0.4s ease;
+    background-color: var(--text-secondary);
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.4s ease;
     transform-origin: center;
 }
 
-// 4. THE CROSS ANIMATION (Refined)
+// 4. THE "X" TRANSFORMATION
 .menu-toggle.is-active {
     .line-1 {
         transform: translateY(11px) rotate(45deg);
@@ -356,53 +382,9 @@ body:not(.light-mode) .nav {
     display: flex;
     padding: 8rem 8vw;
     justify-content: space-between;
-
-    // Default State: Hidden (Pushed up)
     transform: translateY(-100%);
-    will-change: transform; // Performance optimization
-    padding-top: 100px; // Push content down so it doesn't hit the "CLOSE" button
-
-}
-
-
-
-// 2. The Box holding the lines
-.hamburger-box {
-    width: 30px; // Width of the icon
-    height: 24px; // Height of the icon area
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-// 3. The Lines
-.line {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: var(--text-secondary);
-    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.4s ease;
-    transform-origin: center;
-}
-
-// 4. THE "X" TRANSFORMATION (When class 'is-active' is added)
-.menu-toggle.is-active {
-
-    // Top line rotates 45 degrees and moves down
-    .line-1 {
-        transform: translateY(11px) rotate(45deg);
-    }
-
-    // Middle line fades out
-    .line-2 {
-        opacity: 0;
-    }
-
-    // Bottom line rotates -45 degrees and moves up
-    .line-3 {
-        transform: translateY(-11px) rotate(-45deg);
-    }
+    will-change: transform;
+    padding-top: 100px;
 }
 
 // Left Column: The Big Links
@@ -634,6 +616,17 @@ body:not(.light-mode) .nav {
 @media (max-width: 768px) {
     .nav {
         padding: 1rem 1.5rem;
+        // Remove backdrop-filter on mobile — expensive GPU operation
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(10, 10, 10, 0.92) !important;
+    }
+
+    body.light-mode .nav {
+        background: rgba(245, 245, 245, 0.92) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
     }
 
     .brand {
@@ -709,8 +702,8 @@ body:not(.light-mode) .nav {
         gap: 0;
         align-items: center;
         justify-content: center;
-        background: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(12px);
+        background: rgba(0, 0, 0, 0.92);
+        // No backdrop-filter on mobile bottom nav
         border-top: 1px solid var(--border-subtle);
     }
 
@@ -730,6 +723,8 @@ body:not(.light-mode) .nav {
         letter-spacing: 0.08em;
         padding: 0.4rem 0.5rem;
         opacity: 0.5;
+        // Faster taps on mobile
+        touch-action: manipulation;
 
         &.active {
             opacity: 1;
@@ -738,6 +733,12 @@ body:not(.light-mode) .nav {
 
     .nav-num {
         display: none;
+    }
+
+    // Mobile touch optimization
+    a,
+    button {
+        touch-action: manipulation;
     }
 }
 

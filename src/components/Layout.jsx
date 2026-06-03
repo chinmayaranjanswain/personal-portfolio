@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -6,8 +6,8 @@ import Navbar from './Navbar';
 import MenuOverlay from './MenuOverlay';
 import BottomNav from './BottomNav';
 import PageLoader from './PageLoader';
-
 import CustomCursor from './CustomCursor';
+import SmoothScroll from './SmoothScroll';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -50,6 +50,8 @@ export default function Layout() {
         <PageLoader onComplete={() => setLoaderDone(true)} />
       )}
 
+      <SmoothScroll />
+
       <div className="noise-overlay"></div>
       <div className="page-transition"></div>
 
@@ -70,8 +72,6 @@ export default function Layout() {
       </main>
 
       <BottomNav />
-
-
       <CustomCursor />
     </>
   );
